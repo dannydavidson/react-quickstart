@@ -9,3 +9,11 @@ body {
 .App {
   padding: 25px;
 }
+
+h1 {
+	cursor: pointer;
+}
+
+.is-selected {
+	background-color: blue;
+}

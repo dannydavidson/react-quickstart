@@ -1,6 +1,8 @@
 var path        = require('path');
 var url         = require('url');
 var express     = require('express');
+var compress    = require('compression');
+var cors        = require('cors');
 var browserify  = require('connect-browserify');
 var ReactAsync  = require('react-async');
 var nodejsx     = require('node-jsx').install();
@@ -39,7 +41,9 @@ if (development) {
 }
 
 app
+  .use(compress())
   .use('/assets', express.static(path.join(__dirname, 'assets')))
+  .use(cors())
   .use('/api', api)
   .use(renderApp)
   .listen(3000, function() {

@@ -14,9 +14,12 @@
     "react-async": "~0.9.1",
     "react-router-component": "~0.18.2",
     "express": "~4.1.1",
+    "compression": "~1.0.2",
     "node-jsx": "~0.10.0",
     "superagent": "~0.18.0",
-    "fibers": "~1.0.1"
+    "fibers": "~1.0.1",
+    "cors": "~2.3.0",
+    "fastclick": "*"
   },
   "devDependencies": {
     "reactify": "~0.13.1",

@@ -3,7 +3,7 @@
  */
 
 
-var React       = require('react');
+var React       = require('react/addons');
 var ReactMount  = require('react/lib/ReactMount');
 var ReactAsync  = require('react-async');
 var ReactRouter = require('react-router-component');
@@ -40,7 +40,7 @@ var UserPage = React.createClass({
         });
     }
   },
-  
+
   getInitialStateAsync: function(cb) {
     this.type.getUserInfo(this.props.username, cb);
   },
@@ -57,17 +57,26 @@ var UserPage = React.createClass({
   },
 
   render: function() {
+    var cx = React.addons.classSet;
+    var classes = cx({
+      'is-selected': this.state.headerSelected
+    });
     var otherUser = this.props.username === 'doe' ? 'ivan' : 'doe';
     return (
       <div className="UserPage">
-        <h1>Hello, {this.state.name}!</h1>
+        <h1 className={classes} onClick={this.handleHeaderClick}>Hello, {this.state.name}!</h1>
         <p>
           Go to <Link href={"/users/" + otherUser}>/users/{otherUser}</Link>
         </p>
         <p><Link href="/">Logout</Link></p>
       </div>
     );
+  },
+
+  handleHeaderClick: function (evt) {
+    this.setState({headerSelected: !this.state.headerSelected});
   }
+
 });
 
 var NotFoundHandler = React.createClass({
@@ -85,14 +94,16 @@ var App = React.createClass({
     return (
       <html>
         <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
           <link rel="stylesheet" href="/assets/style.css" />
-          <script src="/assets/bundle.js" />
         </head>
         <Pages className="App" path={this.props.path}>
           <Page path="/" handler={MainPage} />
           <Page path="/users/:username" handler={UserPage} />
           <NotFound handler={NotFoundHandler} />
         </Pages>
+      <script src="/assets/bundle.js" />
       </html>
     );
   }
@@ -102,6 +113,10 @@ module.exports = App;
 
 if (typeof window !== 'undefined') {
   window.onload = function() {
+    var FastClick = require('fastclick');
+    FastClick(document.body);
     React.renderComponent(App(), document);
   }
+  window.React = React;
+
 }
